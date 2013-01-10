@@ -50,6 +50,7 @@
     <Compile Include="CodeModel\Token.cs" />
     <Compile Include="CodeModel\TokenType.cs" />
     <Compile Include="Compiler.cs" />
+    <Compile Include="CompilerOptions.cs" />
     <Compile Include="Parser\BufferPosition.cs" />
     <Compile Include="Parser\ErrorEventArgs.cs" />
     <Compile Include="Parser\ErrorEventHandler.cs" />
