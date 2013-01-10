@@ -51,6 +51,7 @@
     <Compile Include="CodeModel\TokenType.cs" />
     <Compile Include="Compiler.cs" />
     <Compile Include="CompilerOptions.cs" />
+    <Compile Include="Generator\AssemblyGenerator.cs" />
     <Compile Include="Parser\BufferPosition.cs" />
     <Compile Include="Parser\ErrorEventArgs.cs" />
     <Compile Include="Parser\ErrorEventHandler.cs" />
@@ -73,6 +74,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
