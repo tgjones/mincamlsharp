@@ -11,7 +11,7 @@ namespace MinCamlSharp.Tests
 		public void PrepareBinariesDirectory()
 		{
 			if (Directory.Exists("Binaries"))
-				Directory.Delete("Binaries");
+				Directory.Delete("Binaries", true);
 			Directory.CreateDirectory("Binaries");
 		}
 
