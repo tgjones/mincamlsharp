@@ -120,8 +120,8 @@
   <data name="LexerUnexpectedCharacter" xml:space="preserve">
     <value>Unexpected character.</value>
   </data>
-  <data name="ParserDataTypeExpected" xml:space="preserve">
-    <value>Data type expected.</value>
+  <data name="LexerUnexpectedEndOfFileStarCloseParen" xml:space="preserve">
+    <value>Unexpected end of file while looking for *)</value>
   </data>
   <data name="ParserTokenExpected" xml:space="preserve">
     <value>Token expected.</value>

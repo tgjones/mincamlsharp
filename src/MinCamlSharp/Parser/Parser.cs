@@ -19,14 +19,6 @@ namespace MinCamlSharp.Parser
 			_tokens = tokens;
 		}
 
-		private Token EatDataType()
-		{
-            if (Token.IsDataType(PeekType()))
-				return NextToken();
-			ReportError(Resources.ParserDataTypeExpected, PeekToken());
-			return ErrorToken();
-		}
-
 		protected Token Eat(TokenType type)
 		{
 			if (PeekType() == type)

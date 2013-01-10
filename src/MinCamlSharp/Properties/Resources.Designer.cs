@@ -70,11 +70,11 @@ namespace MinCamlSharp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data type expected..
+        ///   Looks up a localized string similar to Unexpected end of file while looking for *).
         /// </summary>
-        internal static string ParserDataTypeExpected {
+        internal static string LexerUnexpectedEndOfFileStarCloseParen {
             get {
-                return ResourceManager.GetString("ParserDataTypeExpected", resourceCulture);
+                return ResourceManager.GetString("LexerUnexpectedEndOfFileStarCloseParen", resourceCulture);
             }
         }
         

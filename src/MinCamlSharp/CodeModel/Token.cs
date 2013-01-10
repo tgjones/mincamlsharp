@@ -27,12 +27,7 @@ namespace MinCamlSharp.CodeModel
 			return GetString(Type);
 		}
 
-        public static bool IsDataType(TokenType type)
-        {
-            return type > TokenType.StitchedEffect && type < TokenType.True;
-        }
-
-		public static bool IsKeyword(TokenType type)
+        public static bool IsKeyword(TokenType type)
 		{
 			return (type < TokenType.Identifier);
 		}

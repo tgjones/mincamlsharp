@@ -15,10 +15,13 @@ namespace MinCamlSharp.Parser
 
 		public Token[] GetTokens()
 		{
-			List<Token> result = new List<Token>();
+			var result = new List<Token>();
 			while (!IsEof)
-				result.Add(NextToken());
-			result.Add(NextToken()); // We want EOF as a token.
+			{
+				var next = NextToken();
+				if (next.Type != TokenType.Eof)
+					result.Add(next);
+			}
 			return result.ToArray();
 		}
 
@@ -38,7 +41,25 @@ namespace MinCamlSharp.Parser
 				case '}':
 					return NewToken(TokenType.CloseCurly);
 				case '(':
+				{
+					char c2 = PeekChar();
+					if (c2 == '*')
+					{
+						NextChar();
+						while (!IsEof && (PeekChar() != '*' || PeekChar(1) != ')'))
+                            NextChar();
+						if (IsEof) {
+                            ReportError(Resources.LexerUnexpectedEndOfFileStarCloseParen);
+                            return ErrorToken();
+                        }
+						NextChar();
+                        NextChar();
+                        
+						TakePosition();
+						return NextToken();
+					}
 					return NewToken(TokenType.OpenParen);
+				}
 				case ')':
 					return NewToken(TokenType.CloseParen);
 				case '[':
@@ -47,26 +68,35 @@ namespace MinCamlSharp.Parser
 					return NewToken(TokenType.CloseSquare);
 				case '=':
 					return NewToken(TokenType.Equal);
-				case '-':
-					return NewToken(TokenType.Minus);
 				case ',':
 					return NewToken(TokenType.Comma);
 				case ':':
 					return NewToken(TokenType.Colon);
 				case ';':
 					return NewToken(TokenType.Semicolon);
-				case '/':
+				case '-':
+					return NewToken(TokenType.Minus);
+				case '+':
+					return NewToken(TokenType.Plus);
+				case '<':
+					{
+						char c2 = PeekChar();
+						if (c2 == '=')
+						{
+							NextChar();
+							return NewToken(TokenType.LessEqual);
+						}
+						return NewToken(TokenType.Less);
+					}
+				case '>':
 				{
 					char c2 = PeekChar();
-					if (c2 == '/')
+					if (c2 == '=')
 					{
-						while (!IsEof && !IsLineSeparator(PeekChar()))
-							NextChar();
-						TakePosition();
-						return NextToken();
+						NextChar();
+						return NewToken(TokenType.GreaterEqual);
 					}
-					ReportError(Resources.LexerUnexpectedCharacter, c);
-					return ErrorToken();
+					return NewToken(TokenType.Greater);
 				}
 				case '"':
 				{
