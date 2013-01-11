@@ -1,4 +1,5 @@
 using MinCamlSharp.CodeModel;
+using MinCamlSharp.CodeModel.Tokens;
 using MinCamlSharp.Properties;
 
 namespace MinCamlSharp.Parser
@@ -13,10 +14,16 @@ namespace MinCamlSharp.Parser
 
 		protected int TokenIndex { get; set; }
 
-		protected Parser(string path, Token[] tokens)
+		public Parser(string path, Token[] tokens)
 		{
 			_path = path;
 			_tokens = tokens;
+		}
+
+		public CompilationUnitNode Parse()
+		{
+			return new CompilationUnitNode(new ParseNodeCollection());
+            //Eat(TokenType.Eof);
 		}
 
 		protected Token Eat(TokenType type)

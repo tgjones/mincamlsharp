@@ -1,4 +1,4 @@
-namespace MinCamlSharp.CodeModel
+namespace MinCamlSharp.CodeModel.Tokens
 {
 	public enum LiteralTokenType
 	{

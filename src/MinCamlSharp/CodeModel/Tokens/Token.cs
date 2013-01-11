@@ -2,7 +2,7 @@ using System.ComponentModel;
 using System.Reflection;
 using MinCamlSharp.Parser;
 
-namespace MinCamlSharp.CodeModel
+namespace MinCamlSharp.CodeModel.Tokens
 {
 	public class Token
 	{

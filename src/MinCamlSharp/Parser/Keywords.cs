@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System;
 using MinCamlSharp.CodeModel;
+using MinCamlSharp.CodeModel.Tokens;
 
 namespace MinCamlSharp.Parser
 {

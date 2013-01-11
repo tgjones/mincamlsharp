@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace MinCamlSharp.CodeModel
+namespace MinCamlSharp.CodeModel.Tokens
 {
 	public enum TokenType
 	{
@@ -79,8 +79,11 @@ namespace MinCamlSharp.CodeModel
 		[Description(";")]
 		Semicolon,
 
-		[Description("Shader Code")]
-		ShaderCode,
+		//[Description("Indent")]
+		//Indent,
+
+		//[Description("Dedent")]
+		//Dedent,
 
 		[Description("Literal")]
 		Literal

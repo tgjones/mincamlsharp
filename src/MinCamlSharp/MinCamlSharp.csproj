@@ -39,16 +39,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeModel\CompilationUnitNode.cs" />
     <Compile Include="CodeModel\EnumExtensionMethods.cs" />
-    <Compile Include="CodeModel\FloatToken.cs" />
-    <Compile Include="CodeModel\IdentifierToken.cs" />
-    <Compile Include="CodeModel\IntToken.cs" />
-    <Compile Include="CodeModel\LiteralToken.cs" />
-    <Compile Include="CodeModel\LiteralTokenType.cs" />
+    <Compile Include="CodeModel\Expressions\BinaryExpressionNode.cs" />
+    <Compile Include="CodeModel\Expressions\ExpressionNode.cs" />
+    <Compile Include="CodeModel\FunctionNode.cs" />
+    <Compile Include="CodeModel\ParseNodeCollection.cs" />
+    <Compile Include="CodeModel\Statements\IfElseNode.cs" />
+    <Compile Include="CodeModel\Statements\StatementNode.cs" />
+    <Compile Include="CodeModel\Tokens\FloatToken.cs" />
+    <Compile Include="CodeModel\Tokens\IdentifierToken.cs" />
+    <Compile Include="CodeModel\Tokens\IntToken.cs" />
+    <Compile Include="CodeModel\Tokens\LiteralToken.cs" />
+    <Compile Include="CodeModel\Tokens\LiteralTokenType.cs" />
     <Compile Include="CodeModel\ParseNode.cs" />
-    <Compile Include="CodeModel\StringToken.cs" />
-    <Compile Include="CodeModel\Token.cs" />
-    <Compile Include="CodeModel\TokenType.cs" />
+    <Compile Include="CodeModel\Tokens\StringToken.cs" />
+    <Compile Include="CodeModel\Tokens\Token.cs" />
+    <Compile Include="CodeModel\Tokens\TokenType.cs" />
     <Compile Include="Compiler.cs" />
     <Compile Include="CompilerOptions.cs" />
     <Compile Include="Generator\AssemblyGenerator.cs" />

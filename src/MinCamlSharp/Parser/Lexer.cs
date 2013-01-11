@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using MinCamlSharp.CodeModel;
+using MinCamlSharp.CodeModel.Tokens;
 using MinCamlSharp.Properties;
 
 namespace MinCamlSharp.Parser
@@ -22,6 +23,7 @@ namespace MinCamlSharp.Parser
 				if (next.Type != TokenType.Eof)
 					result.Add(next);
 			}
+
 			return result.ToArray();
 		}
 

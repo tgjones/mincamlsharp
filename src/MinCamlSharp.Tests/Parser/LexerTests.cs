@@ -1,4 +1,5 @@
 ﻿using MinCamlSharp.CodeModel;
+using MinCamlSharp.CodeModel.Tokens;
 using MinCamlSharp.Parser;
 using NUnit.Framework;
 

@@ -1,6 +1,6 @@
 using MinCamlSharp.Parser;
 
-namespace MinCamlSharp.CodeModel
+namespace MinCamlSharp.CodeModel.Tokens
 {
 	public class LiteralToken : Token
 	{
