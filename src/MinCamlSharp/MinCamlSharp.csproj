@@ -43,9 +43,15 @@
     <Compile Include="CodeModel\EnumExtensionMethods.cs" />
     <Compile Include="CodeModel\Expressions\BinaryExpressionNode.cs" />
     <Compile Include="CodeModel\Expressions\ExpressionNode.cs" />
-    <Compile Include="CodeModel\FunctionNode.cs" />
+    <Compile Include="CodeModel\Expressions\UnitNode.cs" />
+    <Compile Include="CodeModel\LiteralNode.cs" />
+    <Compile Include="CodeModel\NameNode.cs" />
     <Compile Include="CodeModel\ParseNodeCollection.cs" />
     <Compile Include="CodeModel\Statements\IfElseNode.cs" />
+    <Compile Include="CodeModel\Statements\DefinitionNode.cs" />
+    <Compile Include="CodeModel\Statements\FunctionDefinitionNode.cs" />
+    <Compile Include="CodeModel\Statements\LetTupleNode.cs" />
+    <Compile Include="CodeModel\Statements\VariableDefinitionNode.cs" />
     <Compile Include="CodeModel\Statements\StatementNode.cs" />
     <Compile Include="CodeModel\Tokens\FloatToken.cs" />
     <Compile Include="CodeModel\Tokens\IdentifierToken.cs" />

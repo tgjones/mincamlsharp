@@ -2,16 +2,16 @@
 {
 	public class CompilationUnitNode : ParseNode
 	{
-		private readonly ParseNodeCollection _members;
+		private readonly ParseNodeCollection _statements;
 
-		public CompilationUnitNode(ParseNodeCollection members)
+		public CompilationUnitNode(ParseNodeCollection statements)
 		{
-			_members = members;
+			_statements = statements;
 		}
 
-		public ParseNodeCollection Members
+		public ParseNodeCollection Statements
 		{
-			get { return _members; }
+			get { return _statements; }
 		}
 	}
 }

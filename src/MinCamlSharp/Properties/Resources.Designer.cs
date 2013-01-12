@@ -79,6 +79,15 @@ namespace MinCamlSharp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expected expression..
+        /// </summary>
+        internal static string ParseExpressionExpected {
+            get {
+                return ResourceManager.GetString("ParseExpressionExpected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Token expected..
         /// </summary>
         internal static string ParserTokenExpected {

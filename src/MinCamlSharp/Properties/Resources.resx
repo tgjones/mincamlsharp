@@ -123,6 +123,9 @@
   <data name="LexerUnexpectedEndOfFileStarCloseParen" xml:space="preserve">
     <value>Unexpected end of file while looking for *)</value>
   </data>
+  <data name="ParseExpressionExpected" xml:space="preserve">
+    <value>Expected expression.</value>
+  </data>
   <data name="ParserTokenExpected" xml:space="preserve">
     <value>Token expected.</value>
   </data>
