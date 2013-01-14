@@ -42,6 +42,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ast\Add.cs" />
+    <Compile Include="Ast\ArrayCreate.cs" />
+    <Compile Include="Ast\AstNode.cs" />
+    <Compile Include="Ast\Bool.cs" />
+    <Compile Include="Ast\Eq.cs" />
+    <Compile Include="Ast\Float.cs" />
+    <Compile Include="Ast\Get.cs" />
+    <Compile Include="Ast\LessEqual.cs" />
+    <Compile Include="Ast\Let.cs" />
+    <Compile Include="Ast\FunctionApplication.cs" />
+    <Compile Include="Ast\If.cs" />
+    <Compile Include="Ast\LetRec.cs" />
+    <Compile Include="Ast\Neg.cs" />
+    <Compile Include="Ast\Not.cs" />
+    <Compile Include="Ast\Number.cs" />
+    <Compile Include="Ast\Put.cs" />
+    <Compile Include="Ast\Sub.cs" />
+    <Compile Include="Ast\Tuple.cs" />
+    <Compile Include="Ast\Unit.cs" />
+    <Compile Include="Ast\Var.cs" />
     <Compile Include="Compiler.cs" />
     <Compile Include="CompilerOptions.cs" />
     <Compile Include="Generator\AssemblyGenerator.cs" />

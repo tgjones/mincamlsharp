@@ -1,5 +1,7 @@
 ﻿using System;
+using Irony.Ast;
 using Irony.Parsing;
+using MinCamlSharp.Compiler.Ast;
 
 namespace MinCamlSharp.Compiler
 {
@@ -9,118 +11,182 @@ namespace MinCamlSharp.Compiler
 	[Language("MinCaml", "0.1", "Minimal subset of Objective Caml")]
 	public class MinCamlGrammar : Grammar
 	{
-		 public MinCamlGrammar()
-		 {
-			 // Terminals
-			 var LPAREN = ToTerm("(", "LParen");
-			 var RPAREN = ToTerm(")", "RParen");
-			 var TRUE = ToTerm("true", "True");
-			 var FALSE = ToTerm("false", "False");
-			 var NOT = ToTerm("not", "Not");
-			 var NUMBER = new NumberLiteral("Number")
-			 {
-				 DefaultFloatType = TypeCode.Single,
-				 DefaultIntTypes = new[] { TypeCode.Int32 }
-			 };
-			 var MINUS = ToTerm("-", "Minus");
-			 var PLUS = ToTerm("+", "Plus");
-			 var MINUS_DOT = ToTerm("-.", "MinusDot");
-			 var PLUS_DOT = ToTerm("+.", "PlusDot");
-			 var AST_DOT = ToTerm("*.", "AstDot");
-			 var SLASH_DOT = ToTerm("*.", "SlashDot");
-			 var EQUAL = ToTerm("=", "Equal");
-			 var LESS_GREATER = ToTerm("<>", "LessGreater");
-			 var LESS_EQUAL = ToTerm("<=", "LessEqual");
-			 var GREATER_EQUAL = ToTerm(">=", "GreaterEqual");
-			 var LESS = ToTerm("<", "Less");
-			 var GREATER = ToTerm(">", "Greater");
-			 var IF = ToTerm("if", "If");
-			 var THEN = ToTerm("then", "Then");
-			 var ELSE = ToTerm("else", "Else");
-			 var LET = ToTerm("let", "Let");
-			 var IN = ToTerm("in", "In");
-			 var REC = ToTerm("rec", "Rec");
-			 var COMMA = ToTerm(",", "Comma");
-			 var UNDERSCORE = ToTerm("_", "Underscore");
-			 var ARRAY_CREATE = ToTerm("Array.create", "Array.create");
-			 var DOT = ToTerm(".", "Dot");
-			 var LESS_MINUS = ToTerm("<-", "LessMinus");
-			 var SEMICOLON = ToTerm(";", "Semicolon");
-			 var IDENT = new IdentifierTerminal("Identifier")
-			 {
-				 AllFirstChars = "abcdefghijklmnopqrstuvwxyz",
-				 AllChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890_"
-			 };
+		public MinCamlGrammar()
+		{
+			// Terminals
+			var tLParen = ToTerm("(", "LParen");
+			var tRParen = ToTerm(")", "RParen");
+			var tTrue = ToTerm("true", "True");
+			var tFalse = ToTerm("false", "False");
+			var tNot = ToTerm("not", "Not");
+			var tNumber = new NumberLiteral("Number")
+			{
+				DefaultFloatType = TypeCode.Single,
+				DefaultIntTypes = new[] { TypeCode.Int32 }
+			};
+			var tMinus = ToTerm("-", "Minus");
+			var tPlus = ToTerm("+", "Plus");
+			var tMinusDot = ToTerm("-.", "MinusDot");
+			var tPlusDot = ToTerm("+.", "PlusDot");
+			var tAstDot = ToTerm("*.", "AstDot");
+			var tSlashDot = ToTerm("*.", "SlashDot");
+			var tEqual = ToTerm("=", "Equal");
+			var tLessGreater = ToTerm("<>", "LessGreater");
+			var tLessEqual = ToTerm("<=", "LessEqual");
+			var tGreaterEqual = ToTerm(">=", "GreaterEqual");
+			var tLess = ToTerm("<", "Less");
+			var tGreater = ToTerm(">", "Greater");
+			var tIf = ToTerm("if", "If");
+			var tThen = ToTerm("then", "Then");
+			var tElse = ToTerm("else", "Else");
+			var tLet = ToTerm("let", "Let");
+			var tIn = ToTerm("in", "In");
+			var tRec = ToTerm("rec", "Rec");
+			var tComma = ToTerm(",", "Comma");
+			var tArrayCreate = ToTerm("Array.create", "Array.create");
+			var tDot = ToTerm(".", "Dot");
+			var tLessMinus = ToTerm("<-", "LessMinus");
+			var tSemicolon = ToTerm(";", "Semicolon");
+			var tIdentifier = new IdentifierTerminal("Identifier")
+			{
+				AllFirstChars = "abcdefghijklmnopqrstuvwxyz",
+				AllChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890_"
+			};
 
-			 var BlockComment = new CommentTerminal("BlockComment", "(*", "*)");
-			 NonGrammarTerminals.Add(BlockComment);
+			// Comments
+			var blockComment = new CommentTerminal("BlockComment", "(*", "*)");
+			NonGrammarTerminals.Add(blockComment);
 
-			 // Non-terminals
-			 var boolean_literal = new NonTerminal("boolean_literal");
-			 boolean_literal.Rule = TRUE | FALSE;
+			// Non-terminals
+			var parenthesizedExpression = new NonTerminal("ParenthesizedExpression");
+			var emptyParentheses = new NonTerminal("EmptyParentheses");
+			var boolean = new NonTerminal("BooleanLiteral");
+			var number = new NonTerminal("NumberLiteral");
+			var identifier = new NonTerminal("Identifier");
+			var get = new NonTerminal("GetExpression");
 
-			 var exp = new NonTerminal("exp");
-			
-			 var simpleExp = new NonTerminal("simple_exp");
-			 simpleExp.Rule = 
-				 LPAREN + exp + RPAREN
-				 | LPAREN + RPAREN
-				 | boolean_literal
-				 | NUMBER
-				 | IDENT
-				 | simpleExp + DOT + LPAREN + exp + RPAREN;
+			var simpleExp = new NonTerminal("SimpleExpression");
 
-			 var formalArgs = new NonTerminal("formal_args");
-			 formalArgs.Rule = 
-				 IDENT + formalArgs
-				 | IDENT;
+			var not = new NonTerminal("Not");
+			var unaryOp = new NonTerminal("UnaryOp");
+			var unaryOpExpression = new NonTerminal("UnaryOpExpression");
+			var binaryOp = new NonTerminal("BinaryOp");
+			var binaryOpExpression = new NonTerminal("BinaryOpExpression");
+			var ifThenElse = new NonTerminal("If");
+			var let = new NonTerminal("Let");
+			var letRec = new NonTerminal("LetRec");
+			var functionApplication = new NonTerminal("FunctionApplication");
+			var letTuple = new NonTerminal("LetTuple");
+			var put = new NonTerminal("Put");
+			var letUnit = new NonTerminal("LetUnit");
+			var arrayCreate = new NonTerminal("ArrayCreate");
 
-			 var fundef = new NonTerminal("fundef");
-			 fundef.Rule = IDENT + formalArgs + EQUAL + exp;
+			var exp = new NonTerminal("Expression");
 
-			 var actualArgs = new NonTerminal("actual_args");
-			 actualArgs.Rule = 
-				 actualArgs + simpleExp
-				 | simpleExp;
+			var formalArgs = new NonTerminal("SimpleArgs");
+			var functionDefinition = new NonTerminal("FunctionDefinition");
+			var actualArgs = new NonTerminal("ActualArgs");
+			var tupleElements = new NonTerminal("TupleElements");
+			var tuplePattern = new NonTerminal("TuplePattern");
 
-			 var elems = new NonTerminal("elems");
-			 elems.Rule =
-				 elems + COMMA + exp
-				 | exp + COMMA + exp;
+			// Rules
 
-			 var pat = new NonTerminal("pat");
-			 pat.Rule = 
-				 pat + COMMA + IDENT
-				 | IDENT + COMMA + IDENT;
+			parenthesizedExpression.Rule = tLParen + exp + tRParen;
+			emptyParentheses.Rule = tLParen + tRParen;
+			boolean.Rule = tTrue | tFalse;
+			number.Rule = tNumber;
+			identifier.Rule = tIdentifier;
+			get.Rule = simpleExp + tDot + tLParen + exp + tRParen;
 
-			 exp.Rule =
-				simpleExp
-				| NOT + exp
-				| MINUS + exp
-				| exp + PLUS + exp
-				| exp + MINUS + exp
-				| exp + EQUAL + exp
-				| exp + LESS_GREATER + exp
-				| exp + LESS + exp
-				| exp + GREATER + exp
-				| exp + LESS_EQUAL + exp
-				| exp + GREATER_EQUAL + exp
-				| IF + exp + THEN + exp + ELSE + exp
-				| MINUS_DOT + exp
-				| exp + PLUS_DOT + exp
-				| exp + MINUS_DOT + exp
-				| exp + AST_DOT + exp
-				| exp + SLASH_DOT + exp
-				| LET + IDENT + EQUAL + exp + IN + exp
-				| LET + REC + fundef + IN + exp
-				| exp + actualArgs
-				| elems
-				| LET + LPAREN + pat + RPAREN + EQUAL + exp + IN + exp
-				| simpleExp + DOT + LPAREN + exp + RPAREN + LESS_MINUS + exp
-				| exp + SEMICOLON + exp
-				| ARRAY_CREATE + simpleExp + simpleExp;
+			simpleExp.Rule =
+				parenthesizedExpression
+				| emptyParentheses
+				| boolean
+				| number
+				| identifier
+				| get;
 
-			 Root = exp;
-		 }
+			formalArgs.Rule =
+				tIdentifier + formalArgs
+				| tIdentifier;
+
+			functionDefinition.Rule = tIdentifier + formalArgs + tEqual + exp;
+
+			actualArgs.Rule =
+				actualArgs + simpleExp
+				| simpleExp;
+
+			tupleElements.Rule =
+				tupleElements + tComma + exp
+				| exp + tComma + exp;
+
+			tuplePattern.Rule =
+				tuplePattern + tComma + tIdentifier
+				| tIdentifier + tComma + tIdentifier;
+
+			not.Rule = tNot + exp;
+
+			unaryOp.Rule =
+				tMinus
+				| tMinusDot;
+			unaryOpExpression.Rule = unaryOp + exp;
+
+			binaryOp.Rule =
+				tPlus
+				| tMinus
+				| tEqual
+				| tLessGreater
+				| tLess
+				| tGreater
+				| tLessEqual
+				| tGreaterEqual
+				| tPlusDot
+				| tMinusDot
+				| tAstDot
+				| tSlashDot;
+			binaryOpExpression.Rule = exp + binaryOp + exp;
+
+			ifThenElse.Rule = tIf + exp + tThen + exp + tElse + exp;
+			let.Rule = tLet + tIdentifier + tEqual + exp + tIn + exp;
+
+			letRec.Rule = tLet + tRec + functionDefinition + tIn + exp;
+			letRec.AstConfig.NodeCreator = (c, n) => new LetRec(
+				(AstNode) n.ChildNodes[2].AstNode,
+				(AstNode) n.ChildNodes[4].AstNode);
+
+			functionApplication.Rule = exp + actualArgs;
+			letTuple.Rule = tLet + tLParen + tuplePattern + tRParen + tEqual + exp + tIn + exp;
+			put.Rule = simpleExp + tDot + tLParen + exp + tRParen + tLessMinus + exp;
+			letUnit.Rule = exp + tSemicolon + exp;
+			arrayCreate.Rule = tArrayCreate + simpleExp + simpleExp;
+
+			exp.Rule =
+			   simpleExp
+			   | not
+			   | unaryOpExpression
+			   | binaryOpExpression
+			   | ifThenElse
+			   | let
+			   | letRec
+			   | functionApplication
+			   | tupleElements
+			   | letTuple
+			   | put
+			   | letUnit
+			   | arrayCreate;
+
+			Root = exp;
+
+			MarkTransient(exp, simpleExp);
+			//LanguageFlags = LanguageFlags.CreateAst;
+		}
+
+		private static NonTerminal CreateNonTerminal(string name, AstNodeCreator astNodeCreator)
+		{
+			return new NonTerminal(name)
+			{
+				AstConfig = { NodeCreator = astNodeCreator }
+			};
+		}
 	}
 }
