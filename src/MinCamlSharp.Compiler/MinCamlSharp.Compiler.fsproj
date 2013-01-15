@@ -61,6 +61,7 @@
     <Compile Include="Typing.fs" />
     <Compile Include="KNormal.fs" />
     <Compile Include="Alpha.fs" />
+    <Compile Include="Elim.fs" />
     <Compile Include="Compiler.fs" />
   </ItemGroup>
   <ItemGroup>
