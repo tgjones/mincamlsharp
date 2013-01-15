@@ -66,6 +66,7 @@
     <Compile Include="Assoc.fs" />
     <Compile Include="Inline.fs" />
     <Compile Include="ConstFold.fs" />
+    <Compile Include="Closure.fs" />
     <Compile Include="Compiler.fs" />
   </ItemGroup>
   <ItemGroup>

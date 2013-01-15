@@ -1,57 +1,58 @@
-﻿module MinCamlSharp.Compiler.Tests.Elim
+﻿module MinCamlSharp.Compiler.Tests.Closure
 
 open MinCamlSharp.Compiler
-open MinCamlSharp.Compiler.KNormal
+open MinCamlSharp.Compiler.Closure
 open NUnit.Framework
 open NUnit.Framework.Constraints
 
 [<Test>]
-let CanElim() =
+let TestClosureConversion() =
     // Arrange.
     let input = 
-        LetRec (
+        KNormal.LetRec (
           { name = ("sum.1", Type.Fun([Type.Int], Type.Int));
             args = [("x.2", Type.Int)];
             body =
-                Let(
+                KNormal.Let(
                     ("Ti3.3", Type.Int),
-                    Int(0),
-                    IfLE(
-                        "x.2", "Ti3.3", Int(0),
-                        Let(
+                    KNormal.Int(0),
+                    KNormal.IfLE(
+                        "x.2", "Ti3.3", KNormal.Int(0),
+                        KNormal.Let(
                             ("Ti6.4", Type.Int),
-                            Let(
+                            KNormal.Let(
                                 ("Ti5.5", Type.Int),
-                                Let(
+                                KNormal.Let(
                                     ("Ti4.6", Type.Int),
-                                    Int(1),
-                                    Sub("x.2", "Ti4.6")
+                                    KNormal.Int(1),
+                                    KNormal.Sub("x.2", "Ti4.6")
                                 ),
-                                App("sum.1", ["Ti5.5"])
+                                KNormal.App("sum.1", ["Ti5.5"])
                             ),
-                            Add("Ti6.4", "x.2")
+                            KNormal.Add("Ti6.4", "x.2")
                         )
                     )
                 )},
-            Let(
+            KNormal.Let(
                 ("Ti2.7", Type.Int),
-                Let(
+                KNormal.Let(
                     ("Ti1.8", Type.Int),
-                    Int(10000),
-                    App("sum.1", ["Ti1.8"])
+                    KNormal.Int(10000),
+                    KNormal.App("sum.1", ["Ti1.8"])
                 ),
-                ExtFunApp("print_int", ["Ti2.7"])
+                KNormal.ExtFunApp("print_int", ["Ti2.7"])
             )
         )
 
     // Act.
-    let output = Elim.transform input
+    let output = Closure.transform input
 
     // Assert.
-    let expectedOutput = 
-        LetRec (
-          { name = ("sum.1", Type.Fun([Type.Int], Type.Int));
+    let expectedOutput =
+        Prog (
+          [{ name = (Id.L("sum.1"), Type.Fun([Type.Int], Type.Int));
             args = [("x.2", Type.Int)];
+            formal_fv = [];
             body =
                 Let(
                     ("Ti3.3", Type.Int),
@@ -67,20 +68,20 @@ let CanElim() =
                                     Int(1),
                                     Sub("x.2", "Ti4.6")
                                 ),
-                                App("sum.1", ["Ti5.5"])
+                                AppDir(Id.L("sum.1"), ["Ti5.5"])
                             ),
                             Add("Ti6.4", "x.2")
                         )
                     )
-                )},
+                )}],
             Let(
                 ("Ti2.7", Type.Int),
                 Let(
                     ("Ti1.8", Type.Int),
                     Int(10000),
-                    App("sum.1", ["Ti1.8"])
+                    AppDir(Id.L("sum.1"), ["Ti1.8"])
                 ),
-                ExtFunApp("print_int", ["Ti2.7"])
+                AppDir(Id.L("min_caml_print_int"), ["Ti2.7"])
             )
         )
     Assert.That(output, Is.EqualTo(expectedOutput))
