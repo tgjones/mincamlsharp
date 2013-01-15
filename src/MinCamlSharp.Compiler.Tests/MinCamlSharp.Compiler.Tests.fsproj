@@ -55,6 +55,7 @@
     <Compile Include="KNormalTests.fs" />
     <Compile Include="AlphaTests.fs" />
     <Compile Include="ElimTests.fs" />
+    <Compile Include="BetaTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MinCamlSharp.Compiler\MinCamlSharp.Compiler.fsproj">

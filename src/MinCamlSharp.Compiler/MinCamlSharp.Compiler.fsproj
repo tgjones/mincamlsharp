@@ -62,6 +62,7 @@
     <Compile Include="KNormal.fs" />
     <Compile Include="Alpha.fs" />
     <Compile Include="Elim.fs" />
+    <Compile Include="Beta.fs" />
     <Compile Include="Compiler.fs" />
   </ItemGroup>
   <ItemGroup>
