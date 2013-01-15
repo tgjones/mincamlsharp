@@ -9,5 +9,6 @@ type Compiler(options : CompilerOptions) =
         Lexer.CreateBufferFromString(File.ReadAllText(options.SourceFile))
             |> Parser.exp Lexer.token
             |> Typing.transform
+            |> KNormal.transform
             |> assemblyGenerator.GenerateAssembly
         true

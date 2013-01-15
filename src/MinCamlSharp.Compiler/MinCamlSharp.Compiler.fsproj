@@ -57,8 +57,9 @@
     <Compile Include="Lexer.fs" />
     <Compile Include="CompilerOptions.fs" />
     <Compile Include="Generator.fs" />
-    <Compile Include="Map.fs" />
+    <Compile Include="ModuleExtensions.fs" />
     <Compile Include="Typing.fs" />
+    <Compile Include="KNormal.fs" />
     <Compile Include="Compiler.fs" />
   </ItemGroup>
   <ItemGroup>

@@ -50,8 +50,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Compile Include="TestHelper.fs" />
     <Compile Include="ParserTests.fs" />
     <Compile Include="TypingTests.fs" />
+    <Compile Include="KNormalTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MinCamlSharp.Compiler\MinCamlSharp.Compiler.fsproj">
