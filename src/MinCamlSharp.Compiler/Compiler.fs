@@ -26,5 +26,6 @@ type Compiler(options : CompilerOptions) =
             |> KNormal.transform
             |> Alpha.transform
             |> iter !limit
+            |> Closure.transform
             |> assemblyGenerator.GenerateAssembly
         true
