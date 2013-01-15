@@ -22,7 +22,7 @@ let rec g env = function
         Printf.eprintf "inlining %s@." x;
         let env' =
             List.fold2
-                (fun env' (z, t) y -> M.add z y env')
+                (fun env' (z, t) y -> Map.add z y env')
                 Map.empty
                 zs
                 ys in
