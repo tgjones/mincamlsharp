@@ -60,6 +60,7 @@
     <Compile Include="ModuleExtensions.fs" />
     <Compile Include="Typing.fs" />
     <Compile Include="KNormal.fs" />
+    <Compile Include="Alpha.fs" />
     <Compile Include="Compiler.fs" />
   </ItemGroup>
   <ItemGroup>

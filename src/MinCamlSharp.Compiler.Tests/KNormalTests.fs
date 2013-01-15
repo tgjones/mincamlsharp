@@ -8,6 +8,7 @@ open NUnit.Framework.Constraints
 [<Test>]
 let CanKNormalize() =
     // Arrange.
+    Id.counter := 0
     Typing.externalEnvironment := Map.add "print_int" (Type.Fun([Type.Int], Type.Unit)) Map.empty
     let input =
         Syntax.LetRec (

@@ -10,5 +10,6 @@ type Compiler(options : CompilerOptions) =
             |> Parser.exp Lexer.token
             |> Typing.transform
             |> KNormal.transform
+            |> Alpha.transform
             |> assemblyGenerator.GenerateAssembly
         true
